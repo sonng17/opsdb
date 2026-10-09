@@ -1,3 +1,33 @@
+#!/usr/bin/env bash
+# Khung repo OpsDB theo muc 5.1 cua tai lieu.
+# Cach dung: clone repo opsdb (rong, chi co README tu GitHub) -> cd vao -> bash init_opsdb.sh
+# Chay duoc tren Git Bash (Windows), macOS, Linux.
+set -euo pipefail
+
+dirs=(
+  db/oracle/migrations db/oracle/rollback db/oracle/packages
+  db/mssql/migrations  db/mssql/rollback  db/mssql/procedures
+  db/mysql/migrations  db/mysql/rollback  db/mysql/procedures
+  db/postgres/migrations
+  db/mongodb/validators
+  backup/rman backup/mssql backup/mysql
+  monitoring/dashboards
+  infra/aws
+  simulator
+  etl
+  scripts
+  .github/workflows
+  docs/install docs/runbooks docs/postmortems docs/migration docs/adr
+)
+
+for d in "${dirs[@]}"; do
+  mkdir -p "$d"
+  touch "$d/.gitkeep"
+done
+
+touch docs/backup-strategy.md docs/tuning-log.md docs/release-notes.md
+
+cat > README.md <<'EOF'
 # OpsDB
 
 Order-to-Cash system running on four databases (Oracle 19c, SQL Server 2022, MySQL 8.4, MongoDB 8.0),
@@ -35,3 +65,52 @@ _Only real numbers measured in this lab._
 - `simulator/` data seeding and Order-to-Cash load generator
 - `etl/` nightly pipeline to BigQuery
 - `docs/` install guides, runbooks, postmortems, tuning log, migration docs, ADRs
+EOF
+
+cat > .gitignore <<'EOF'
+# Bo cai, ISO, file lon - khong bao gio commit
+*.iso
+*.zip
+*.rpm
+*.ova
+*.vdi
+
+# Backup / dump
+*.bak
+*.bkp
+*.dmp
+*.trn
+*.xbstream
+backup_out/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+.terraform.lock.hcl.bak
+
+# Bi mat
+.env
+*.pem
+*.key
+credentials*
+secrets*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+EOF
+
+echo "Xong. Tiep theo:"
+echo "  git add . && git commit -m 'chore: scaffold repo structure' && git push origin main"
+echo "  git checkout -b develop && git push -u origin develop"

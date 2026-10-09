@@ -1,0 +1,41 @@
+# Bo cai, ISO, file lon - khong bao gio commit
+*.iso
+*.zip
+*.rpm
+*.ova
+*.vdi
+
+# Backup / dump
+*.bak
+*.bkp
+*.dmp
+*.trn
+*.xbstream
+backup_out/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+.terraform.lock.hcl.bak
+
+# Bi mat
+.env
+*.pem
+*.key
+credentials*
+secrets*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

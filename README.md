@@ -15,7 +15,16 @@ _TODO: diagram_
 | Audit     | MongoDB 8.0       | 3-node replica set                     |
 
 ## Lab setup
-_TODO: VM layout, how to rebuild the lab (see docs/install/)_
+Two VirtualBox VMs on a 16 GB Windows laptop, host-only network `192.168.56.0/24`.
+VMs are created by [`scripts/lab/create-vms.ps1`](scripts/lab/create-vms.ps1).
+
+| VM | OS | RAM / vCPU | Runs |
+|----|----|-----------|------|
+| `vm-oracle` 192.168.56.10 | Oracle Linux 8.10 | 4 GB / 2 | Oracle 19c EE: CDB `OPSCDB`, PDB `LEDGER`, ARCHIVELOG |
+| `vm-apps` 192.168.56.20 | Ubuntu 22.04.5 Server | 5 GB / 2 | SQL Server 2022 Developer, MySQL 8.4 primary, MySQL 8.4 replica (Docker) |
+
+Install guides with every command, parameter choice and the problems hit:
+[Oracle](docs/install/oracle.md) · [SQL Server](docs/install/mssql.md) · [MySQL](docs/install/mysql.md).
 
 ## Measured results
 _Only real numbers measured in this lab._
